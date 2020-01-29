@@ -1,0 +1,29 @@
+<?php
+
+namespace Spatie\MailcoachSendgridFeedback;
+
+use Illuminate\Mail\Events\MessageSending;
+use Illuminate\Mail\Events\MessageSent;
+
+class AddUniqueArgumentsMailHeader
+{
+    public function handle(MessageSending $event)
+    {
+        $sendHeader = $event->message->getHeaders()->get('mailcoach-send-uuid');
+
+        if (!$sendHeader) {
+            return;
+        }
+
+        $sendUuid = $sendHeader->getFieldBody();
+
+        if (!$sendUuid) {
+            return;
+        }
+
+        $event->message->getHeaders()->addTextHeader(
+            'X-SMTPAPI',
+            json_encode(['unique_args' => ['send_uuid' => $sendUuid]])
+        );
+    }
+}
