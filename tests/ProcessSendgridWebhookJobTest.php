@@ -2,6 +2,7 @@
 
 namespace Spatie\MailcoachSendgridFeedback\Tests;
 
+use Carbon\Carbon;
 use Spatie\Mailcoach\Enums\SendFeedbackType;
 use Spatie\Mailcoach\Models\CampaignLink;
 use Spatie\Mailcoach\Models\CampaignOpen;
@@ -51,8 +52,11 @@ class ProcessSendgridWebhookJobTest extends TestCase
         (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
 
         $this->assertEquals(1, SendFeedbackItem::count());
-        $this->assertEquals(SendFeedbackType::COMPLAINT, SendFeedbackItem::first()->type);
-        $this->assertTrue($this->send->is(SendFeedbackItem::first()->send));
+        tap(SendFeedbackItem::first(), function (SendFeedbackItem $sendFeedbackItem) {
+            $this->assertEquals(SendFeedbackType::COMPLAINT, $sendFeedbackItem->type);
+            $this->assertEquals(Carbon::createFromTimestamp(1574854444), $sendFeedbackItem->created_at);
+            $this->assertTrue($this->send->is($sendFeedbackItem->send));
+        });
     }
 
     /** @test */
@@ -64,6 +68,7 @@ class ProcessSendgridWebhookJobTest extends TestCase
         $this->assertEquals(1, CampaignLink::count());
         $this->assertEquals('https://example.com', CampaignLink::first()->url);
         $this->assertCount(1, CampaignLink::first()->clicks);
+        $this->assertEquals(Carbon::createFromTimestamp(1574854444), CampaignLink::first()->clicks->first()->created_at);
     }
 
     /** @test */
@@ -73,6 +78,7 @@ class ProcessSendgridWebhookJobTest extends TestCase
         (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
 
         $this->assertCount(1, $this->send->campaign->opens);
+        $this->assertEquals(Carbon::createFromTimestamp(1574854444), $this->send->campaign->opens->first()->created_at);
     }
 
     /** @test */

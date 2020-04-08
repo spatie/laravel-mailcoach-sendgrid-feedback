@@ -13,6 +13,6 @@ class OpenEvent extends SendgridEvent
 
     public function handle(Send $send)
     {
-        return $send->registerOpen();
+        return $send->registerOpen($this->getTimestamp());
     }
 }

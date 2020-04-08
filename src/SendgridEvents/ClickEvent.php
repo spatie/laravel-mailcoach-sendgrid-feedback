@@ -20,6 +20,6 @@ class ClickEvent extends SendgridEvent
             return;
         }
 
-        $send->registerClick($url);
+        $send->registerClick($url, $this->getTimestamp());
     }
 }

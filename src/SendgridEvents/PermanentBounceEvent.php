@@ -14,6 +14,6 @@ class PermanentBounceEvent extends SendgridEvent
 
     public function handle(Send $send)
     {
-        $send->registerBounce();
+        $send->registerBounce($this->getTimestamp());
     }
 }
