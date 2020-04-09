@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.1.1 - 2020-04-09
+
+- fix time on feedback registration
+
 ## 2.1.0 - 2020-03-20
 
 - add ability to use a custom queue connection
