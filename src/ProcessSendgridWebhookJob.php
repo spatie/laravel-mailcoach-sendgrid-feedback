@@ -26,13 +26,15 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
         foreach ($payload as $rawEvent) {
             $this->handleRawEvent($rawEvent);
         }
+
+        $this->webhookCall->delete();
     }
 
     protected function handleRawEvent(array $rawEvent)
     {
         if (!$send = $this->getSend($rawEvent)) {
             return;
-        };
+        }
 
         $sendgridEvent = SendgridEventFactory::createForPayload($rawEvent);
 

@@ -43,6 +43,7 @@ class ProcessSendgridWebhookJobTest extends TestCase
         $this->assertEquals(2, SendFeedbackItem::count());
         $this->assertEquals(SendFeedbackType::BOUNCE, SendFeedbackItem::first()->type);
         $this->assertTrue($this->send->is(SendFeedbackItem::first()->send));
+        $this->assertDeleted($this->webhookCall);
     }
 
     /** @test */
@@ -79,6 +80,16 @@ class ProcessSendgridWebhookJobTest extends TestCase
 
         $this->assertCount(1, $this->send->campaign->opens);
         $this->assertEquals(Carbon::createFromTimestamp(1574854444), $this->send->campaign->opens->first()->created_at);
+    }
+
+    /** @test */
+    public function it_deletes_the_webhookcall_after_processing()
+    {
+        $this->webhookCall->update(['payload' => $this->getStub('clickPayload')]);
+
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+
+        $this->assertDeleted($this->webhookCall);
     }
 
     /** @test */
