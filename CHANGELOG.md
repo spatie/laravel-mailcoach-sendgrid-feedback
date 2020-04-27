@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.2.0 - 2020-04-27
+
+- fire `WebhookCallProcessedEvent` when processing webhook is complete
+
 ## 2.1.1 - 2020-04-09
 
 - fix time on feedback registration

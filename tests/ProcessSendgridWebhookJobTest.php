@@ -3,7 +3,9 @@
 namespace Spatie\MailcoachSendgridFeedback\Tests;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Event;
 use Spatie\Mailcoach\Enums\SendFeedbackType;
+use Spatie\Mailcoach\Events\WebhookCallProcessedEvent;
 use Spatie\Mailcoach\Models\CampaignLink;
 use Spatie\Mailcoach\Models\CampaignOpen;
 use Spatie\Mailcoach\Models\Send;
@@ -79,6 +81,17 @@ class ProcessSendgridWebhookJobTest extends TestCase
 
         $this->assertCount(1, $this->send->campaign->opens);
         $this->assertEquals(Carbon::createFromTimestamp(1574854444), $this->send->campaign->opens->first()->created_at);
+    }
+
+    /** @test */
+    public function it_will_fire_an_event_when_processing_is_complete()
+    {
+        Event::fake();
+
+        $this->webhookCall->update(['payload' => $this->getStub('openPayload')]);
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+
+        Event::assertDispatched(WebhookCallProcessedEvent::class);
     }
 
     /** @test */
