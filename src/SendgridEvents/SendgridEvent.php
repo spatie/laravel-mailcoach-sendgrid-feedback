@@ -28,6 +28,6 @@ abstract class SendgridEvent
     {
         $timestamp = $this->payload['timestamp'];
 
-        return $timestamp ? Carbon::createFromTimestamp($timestamp) : null;
+        return $timestamp ? Carbon::createFromTimestamp($timestamp)->setTimezone(config('app.timezone')) : null;
     }
 }
