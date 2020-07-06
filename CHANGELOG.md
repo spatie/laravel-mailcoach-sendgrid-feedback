@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.2.1 - 2020-07-06
+
+- Use the configured app timezone for stored feedback
+
 ## 2.2.0 - 2020-04-27
 
 - fire `WebhookCallProcessedEvent` when processing webhook is complete
