@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.2.2 - 2020-07-20
+
+- validate webhook event - fixes TypeError (#9)
+
 ## 2.2.1 - 2020-07-06
 
 - Use the configured app timezone for stored feedback
