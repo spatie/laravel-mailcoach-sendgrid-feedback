@@ -35,7 +35,7 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
     {
         if (!$send = $this->getSend($rawEvent)) {
             return;
-        };
+        }
 
         $sendgridEvent = SendgridEventFactory::createForPayload($rawEvent);
 
@@ -45,6 +45,10 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
     protected function getSend(array $rawEvent): ?Send
     {
         $sendUuid = Arr::get($rawEvent, 'send_uuid');
+        
+        if (! $sendUuid) {
+            return null;
+        }
 
         return Send::findByUuid($sendUuid);
     }
