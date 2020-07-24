@@ -122,4 +122,15 @@ class ProcessSendgridWebhookJobTest extends TestCase
 
         $this->assertEquals(0, SendFeedbackItem::count());
     }
+
+    /** @test */
+    public function it_will_not_handle_events_without_send_uuid()
+    {
+        $this->webhookCall->update(['payload' => $this->getStub('noSendUuidPayload')]);
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+
+        $this->assertEquals(0, CampaignLink::count());
+        $this->assertEquals(0, CampaignOpen::count());
+        $this->assertEquals(0, SendFeedbackItem::count());
+    }
 }

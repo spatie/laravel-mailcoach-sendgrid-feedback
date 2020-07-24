@@ -33,7 +33,7 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
 
     protected function handleRawEvent(array $rawEvent)
     {
-        if (!$send = $this->getSend($rawEvent)) {
+        if (! $send = $this->getSend($rawEvent)) {
             return;
         }
 
@@ -50,6 +50,6 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
             return null;
         }
 
-        return Send::findByUuid($sendUuid);
+        return $sendUuid !== null ? Send::findByUuid($sendUuid) : null;
     }
 }
