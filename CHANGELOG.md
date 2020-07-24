@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.2.3 - 2020-07-24
+
+- handle events without related send - fixes (#7)
+
+
 ## 2.2.2 - 2020-07-20
 
 - validate webhook event - fixes TypeError (#9)
