@@ -2,6 +2,11 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.2.4 - 2020-08-13
+
+- Don't handle same sg_event_ids twice - (#10)
+- Only handle payloads that are for the relevant subscriber - (#11)
+
 ## 2.2.3 - 2020-07-24
 
 - handle events without related send - fixes (#7)
