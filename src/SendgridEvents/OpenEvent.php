@@ -2,6 +2,7 @@
 
 namespace Spatie\MailcoachSendgridFeedback\SendgridEvents;
 
+use Illuminate\Support\Arr;
 use Spatie\Mailcoach\Models\Send;
 
 class OpenEvent extends SendgridEvent
@@ -13,6 +14,10 @@ class OpenEvent extends SendgridEvent
 
     public function handle(Send $send)
     {
-        return $send->registerOpen($this->getTimestamp());
+        if (Arr::get($this->payload, 'email') !== $send->subscriber->email) {
+            return;
+        }
+
+        $send->registerOpen($this->getTimestamp());
     }
 }

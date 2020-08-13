@@ -20,6 +20,10 @@ class ClickEvent extends SendgridEvent
             return;
         }
 
+        if (Arr::get($this->payload, 'email') !== $send->subscriber->email) {
+            return;
+        }
+
         $send->registerClick($url, $this->getTimestamp());
     }
 }

@@ -33,6 +33,7 @@ class ProcessSendgridWebhookJobTest extends TestCase
 
         $this->send = factory(Send::class)->create();
         $this->send->update(['uuid' => 'test-uuid']);
+        $this->send->subscriber->update(['email' => 'example@test.com']);
 
         $this->send->campaign->update([
             'track_opens' => true,
@@ -62,6 +63,10 @@ class ProcessSendgridWebhookJobTest extends TestCase
             $this->assertEquals(Carbon::createFromTimestamp(1574854444), $sendFeedbackItem->created_at);
             $this->assertTrue($this->send->is($sendFeedbackItem->send));
         });
+
+        $this->send->subscriber->update(['email' => 'not-example@test.com']);
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+        $this->assertEquals(1, SendFeedbackItem::count());
     }
 
     /** @test */
@@ -74,6 +79,11 @@ class ProcessSendgridWebhookJobTest extends TestCase
         $this->assertEquals('https://example.com', CampaignLink::first()->url);
         $this->assertCount(1, CampaignLink::first()->clicks);
         $this->assertEquals(Carbon::createFromTimestamp(1574854444), CampaignLink::first()->clicks->first()->created_at);
+
+        $this->send->subscriber->update(['email' => 'not-example@test.com']);
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+        $this->assertEquals(1, CampaignLink::count());
+        $this->assertCount(1, CampaignLink::first()->clicks);
     }
 
     /** @test */
@@ -84,6 +94,10 @@ class ProcessSendgridWebhookJobTest extends TestCase
 
         $this->assertCount(1, $this->send->campaign->opens);
         $this->assertEquals(Carbon::createFromTimestamp(1574854444), $this->send->campaign->opens->first()->created_at);
+
+        $this->send->subscriber->update(['email' => 'not-example@test.com']);
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+        $this->assertCount(1, $this->send->campaign->fresh()->opens);
     }
 
     /** @test */

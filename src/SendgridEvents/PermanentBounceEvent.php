@@ -14,6 +14,10 @@ class PermanentBounceEvent extends SendgridEvent
 
     public function handle(Send $send)
     {
+        if (Arr::get($this->payload, 'email') !== $send->subscriber->email) {
+            return;
+        }
+
         $send->registerBounce($this->getTimestamp());
     }
 }
