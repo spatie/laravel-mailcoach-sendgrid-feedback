@@ -13,11 +13,15 @@ abstract class SendgridEvent
 
     protected string $event;
 
+    protected ?string $type = null;
+
     public function __construct(array $payload)
     {
         $this->payload = $payload;
 
         $this->event = Arr::get($payload, 'event');
+
+        $this->type = Arr::get($payload, 'type');
     }
 
     abstract public function canHandlePayload(): bool;

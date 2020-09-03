@@ -9,7 +9,7 @@ class PermanentBounceEvent extends SendgridEvent
 {
     public function canHandlePayload(): bool
     {
-        return $this->event === 'bounce';
+        return $this->event === 'bounce' && $this->type === 'bounce';
     }
 
     public function handle(Send $send)

@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.2.5 - 2020-09-03
+
+- Don't handle temporary bounces as permantent bounces
+
 ## 2.2.4 - 2020-08-13
 
 - Don't handle same sg_event_ids twice - (#10)

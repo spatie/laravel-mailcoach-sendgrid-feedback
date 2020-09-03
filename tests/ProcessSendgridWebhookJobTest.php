@@ -101,6 +101,29 @@ class ProcessSendgridWebhookJobTest extends TestCase
     }
 
     /** @test */
+    public function it_can_process_a_sendgrid_bounce_webhook_call()
+    {
+        $this->webhookCall->update(['payload' => $this->getStub('bouncePayload')]);
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+
+        $this->assertEquals(1, SendFeedbackItem::count());
+        $this->assertEquals(SendFeedbackType::BOUNCE, SendFeedbackItem::first()->type);
+        $this->assertTrue($this->send->is(SendFeedbackItem::first()->send));
+    }
+
+    /** @test */
+    public function it_wont_process_a_sendgrid_temporary_bounce_webhook_call()
+    {
+        $payload = $this->getStub('bouncePayload');
+        $payload[0]['type'] = 'blocked';
+
+        $this->webhookCall->update(['payload' => $payload]);
+        (new ProcessSendgridWebhookJob($this->webhookCall))->handle();
+
+        $this->assertEquals(0, SendFeedbackItem::count());
+    }
+
+    /** @test */
     public function it_will_fire_an_event_when_processing_is_complete()
     {
         Event::fake();
