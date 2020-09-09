@@ -8,7 +8,7 @@ All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented 
 
 ## 2.2.5 - 2020-09-03
 
-- Don't handle temporary bounces as permantent bounces
+- Don't handle temporary bounces as permanent bounces
 
 ## 2.2.4 - 2020-08-13
 
