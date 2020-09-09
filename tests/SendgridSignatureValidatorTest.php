@@ -2,10 +2,9 @@
 
 namespace Spatie\MailcoachSendgridFeedback\Tests;
 
-use Spatie\WebhookClient\WebhookConfig;
-use Illuminate\Http\Request;
 use Spatie\MailcoachSendgridFeedback\SendgridSignatureValidator;
 use Spatie\MailcoachSendgridFeedback\SendgridWebhookConfig;
+use Spatie\WebhookClient\WebhookConfig;
 
 class SendgridSignatureValidatorTest extends TestCase
 {

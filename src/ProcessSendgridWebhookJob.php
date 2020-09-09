@@ -5,9 +5,9 @@ namespace Spatie\MailcoachSendgridFeedback;
 use Illuminate\Support\Arr;
 use Spatie\Mailcoach\Events\WebhookCallProcessedEvent;
 use Spatie\Mailcoach\Models\Send;
+use Spatie\Mailcoach\Support\Config;
 use Spatie\WebhookClient\Models\WebhookCall;
 use Spatie\WebhookClient\ProcessWebhookJob;
-use Spatie\Mailcoach\Support\Config;
 
 class ProcessSendgridWebhookJob extends ProcessWebhookJob
 {

@@ -3,7 +3,6 @@
 namespace Spatie\MailcoachSendgridFeedback;
 
 use Illuminate\Mail\Events\MessageSending;
-use Illuminate\Mail\Events\MessageSent;
 
 class AddUniqueArgumentsMailHeader
 {

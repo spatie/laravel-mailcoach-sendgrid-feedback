@@ -3,7 +3,6 @@
 namespace Spatie\MailcoachSendgridFeedback;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Spatie\WebhookClient\SignatureValidator\SignatureValidator;
 use Spatie\WebhookClient\WebhookConfig;
 

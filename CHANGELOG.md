@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.2.6 - 2020-09-09
+
+- add support for Laravel 8
+
 ## 2.2.5 - 2020-09-03
 
 - Don't handle temporary bounces as permantent bounces

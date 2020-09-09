@@ -1,6 +1,7 @@
 <?php
 
 namespace Spatie\MailcoachSendgridFeedback;
+
 use Spatie\WebhookClient\Models\WebhookCall;
 
 use Spatie\WebhookClient\WebhookProcessor as BaseWebhookProcessor;
