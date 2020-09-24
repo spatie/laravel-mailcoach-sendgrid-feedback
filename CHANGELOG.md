@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 2.3.0 - 2020-09-24
+
+- Tag a Mailcoach v3 compatible release
+
 ## 2.2.7 - 2020-09-09
 
 - fix Laravel 8 support
