@@ -24,7 +24,7 @@
         "php": "^7.4",
         "illuminate/http": "^7.0|^8.0",
         "orchestra/testbench": "^5.0|^6.0",
-        "spatie/laravel-mailcoach": "^2.9",
+        "spatie/laravel-mailcoach": "^2.9|^3.0",
         "spatie/laravel-webhook-client": "^2.2"
     },
     "require-dev": {
