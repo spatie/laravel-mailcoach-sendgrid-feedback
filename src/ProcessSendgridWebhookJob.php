@@ -63,7 +63,10 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
 
     private function isFirstOfThisSendgridMessage(array $rawEvent): bool
     {
-        $firstMessageId = (int) WebhookCall::where('payload', 'LIKE', "%\"sg_event_id\":\"{$rawEvent['sg_event_id']}\"%")->min('id');
+        $firstMessageId = (int) WebhookCall::query()
+            ->where('payload', 'LIKE', "%\"sg_event_id\":\"{$rawEvent['sg_event_id']}\"%")
+            ->orWhere('payload', 'LIKE', "%\"sg_event_id\": \"{$rawEvent['sg_event_id']}\"%")
+            ->min('id');
 
         return $this->webhookCall->id === $firstMessageId;
     }
