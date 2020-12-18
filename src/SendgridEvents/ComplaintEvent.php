@@ -3,7 +3,7 @@
 namespace Spatie\MailcoachSendgridFeedback\SendgridEvents;
 
 use Illuminate\Support\Arr;
-use Spatie\Mailcoach\Models\Send;
+use Spatie\Mailcoach\Domain\Campaign\Models\Send;
 
 class ComplaintEvent extends SendgridEvent
 {
