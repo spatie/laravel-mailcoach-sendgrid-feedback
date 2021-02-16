@@ -5,7 +5,7 @@ namespace Spatie\MailcoachSendgridFeedback\SendgridEvents;
 use Carbon\Carbon;
 use DateTimeInterface;
 use Illuminate\Support\Arr;
-use Spatie\Mailcoach\Domain\Campaign\Models\Send;
+use Spatie\Mailcoach\Domain\Shared\Models\Send;
 
 abstract class SendgridEvent
 {
