@@ -31,7 +31,7 @@ class ProcessSendgridWebhookJobTest extends TestCase
             'payload' => $this->getStub('multipleEventsPayload'),
         ]);
 
-        $this->send = factory(Send::class)->create();
+        $this->send = Send::factory()->create();
         $this->send->update(['uuid' => 'test-uuid']);
         $this->send->subscriber->update(['email' => 'example@test.com']);
 
