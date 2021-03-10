@@ -3,9 +3,9 @@
 namespace Spatie\MailcoachSendgridFeedback;
 
 use Illuminate\Support\Arr;
-use Spatie\Mailcoach\Events\WebhookCallProcessedEvent;
-use Spatie\Mailcoach\Models\Send;
-use Spatie\Mailcoach\Support\Config;
+use Spatie\Mailcoach\Domain\Campaign\Events\WebhookCallProcessedEvent;
+use Spatie\Mailcoach\Domain\Shared\Models\Send;
+use Spatie\Mailcoach\Domain\Shared\Support\Config;
 use Spatie\WebhookClient\Models\WebhookCall;
 use Spatie\WebhookClient\ProcessWebhookJob;
 
@@ -15,7 +15,7 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
     {
         parent::__construct($webhookCall);
 
-        $this->queue = config('mailcoach.perform_on_queue.process_feedback_job');
+        $this->queue = config('mailcoach.campaigns.perform_on_queue.process_feedback_job');
 
         $this->connection = $this->connection ?? Config::getQueueConnection();
     }
@@ -61,7 +61,7 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
         return Send::findByUuid($sendUuid);
     }
 
-    private function isFirstOfThisSendgridMessage(array $rawEvent): bool
+    protected function isFirstOfThisSendgridMessage(array $rawEvent): bool
     {
         $firstMessageId = (int) WebhookCall::query()
             ->where('payload', 'LIKE', "%\"sg_event_id\":\"{$rawEvent['sg_event_id']}\"%")

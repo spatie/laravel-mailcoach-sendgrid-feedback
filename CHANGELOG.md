@@ -2,6 +2,10 @@
 
 All notable changes to `laravel-mailcoach-sendgrid-feedback` will be documented in this file
 
+## 3.0.0 - 2021-03-10
+
+- Support for Mailcoach v4
+
 ## 2.3.1 - 2020-09-25
 
 - Fix check on first message id of json payload

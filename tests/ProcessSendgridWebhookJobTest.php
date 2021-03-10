@@ -5,12 +5,12 @@ namespace Spatie\MailcoachSendgridFeedback\Tests;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Event;
-use Spatie\Mailcoach\Enums\SendFeedbackType;
-use Spatie\Mailcoach\Events\WebhookCallProcessedEvent;
-use Spatie\Mailcoach\Models\CampaignLink;
-use Spatie\Mailcoach\Models\CampaignOpen;
-use Spatie\Mailcoach\Models\Send;
-use Spatie\Mailcoach\Models\SendFeedbackItem;
+use Spatie\Mailcoach\Domain\Campaign\Enums\SendFeedbackType;
+use Spatie\Mailcoach\Domain\Campaign\Events\WebhookCallProcessedEvent;
+use Spatie\Mailcoach\Domain\Campaign\Models\CampaignLink;
+use Spatie\Mailcoach\Domain\Campaign\Models\CampaignOpen;
+use Spatie\Mailcoach\Domain\Shared\Models\Send;
+use Spatie\Mailcoach\Domain\Shared\Models\SendFeedbackItem;
 use Spatie\MailcoachSendgridFeedback\ProcessSendgridWebhookJob;
 use Spatie\WebhookClient\Models\WebhookCall;
 
@@ -31,7 +31,7 @@ class ProcessSendgridWebhookJobTest extends TestCase
             'payload' => $this->getStub('multipleEventsPayload'),
         ]);
 
-        $this->send = factory(Send::class)->create();
+        $this->send = Send::factory()->create();
         $this->send->update(['uuid' => 'test-uuid']);
         $this->send->subscriber->update(['email' => 'example@test.com']);
 
