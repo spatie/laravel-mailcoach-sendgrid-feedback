@@ -10,13 +10,13 @@ class AddUniqueArgumentsMailHeader
     {
         $sendHeader = $event->message->getHeaders()->get('mailcoach-send-uuid');
 
-        if (!$sendHeader) {
+        if (! $sendHeader) {
             return;
         }
 
         $sendUuid = $sendHeader->getFieldBody();
 
-        if (!$sendUuid) {
+        if (! $sendUuid) {
             return;
         }
 
