@@ -14,7 +14,7 @@ class AddUniqueArgumentsMailHeader
             return;
         }
 
-        $sendUuid = $sendHeader->getBodyAsString();
+        $sendUuid = $sendHeader->getFieldBody();
 
         if (! $sendUuid) {
             return;
