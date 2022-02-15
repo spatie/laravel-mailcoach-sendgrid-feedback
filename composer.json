@@ -24,7 +24,7 @@
         "php": "^8.0",
         "illuminate/support": "^9.0",
         "symfony/sendgrid-mailer": "^6.0",
-        "spatie/laravel-mailcoach": "^5.0"
+        "spatie/laravel-mailcoach": "^5.2"
     },
     "require-dev": {
         "ext-json": "*",
