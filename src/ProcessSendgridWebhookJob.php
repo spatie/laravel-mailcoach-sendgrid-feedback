@@ -55,16 +55,18 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
 
     protected function getSend(array $rawEvent): ?Send
     {
-        $id = Arr::get($rawEvent, 'send_uuid') ?? explode('.', Arr::get($rawEvent, 'sg_message_id'))[0] ?? null;
-
-        if (! $id) {
-            return null;
-        }
+        $uuid = Arr::get($rawEvent, 'send_uuid');
 
         /** @var class-string<Send> $sendClass */
         $sendClass = self::getSendClass();
 
-        return $sendClass::findByUuid($id) ?? $sendClass::findByTransportMessageId($id);
+        if ($uuid) {
+            return $sendClass::findByUuid($uuid);
+        }
+
+        $messageId = explode('.', Arr::get($rawEvent, 'sg_message_id'))[0] ?? null;
+
+        return $sendClass::findByTransportMessageId($messageId);
     }
 
     protected function isFirstOfThisSendgridMessage(array $rawEvent): bool
