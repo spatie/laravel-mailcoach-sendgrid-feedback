@@ -12,15 +12,16 @@ class StoreTransportMessageId
             return;
         }
 
-        if (! $event->message->getHeaders()->has('X-Sendgrid-Message-ID')) {
+        if (! $messageId = $event->sent->getMessageId()) {
             return;
         }
 
-        /** @var \Spatie\Mailcoach\Models\Send $send */
+        /** @var \Spatie\Mailcoach\Domain\Shared\Models\Send $send */
         $send = $event->data['send'];
 
-        $transportMessageId = $event->message->getHeaders()->get('X-Sendgrid-Message-ID')->getBodyAsString();
+        $messageId = ltrim($messageId, '<');
+        $messageId = rtrim($messageId, '>');
 
-        $send->storeTransportMessageId($transportMessageId);
+        $send->storeTransportMessageId($messageId);
     }
 }
