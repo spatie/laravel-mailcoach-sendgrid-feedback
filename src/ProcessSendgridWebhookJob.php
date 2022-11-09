@@ -5,8 +5,8 @@ namespace Spatie\MailcoachSendgridFeedback;
 use Illuminate\Support\Arr;
 use Spatie\Mailcoach\Domain\Campaign\Events\WebhookCallProcessedEvent;
 use Spatie\Mailcoach\Domain\Shared\Models\Send;
-use Spatie\Mailcoach\Domain\Shared\Support\Config;
 use Spatie\Mailcoach\Domain\Shared\Traits\UsesMailcoachModels;
+use Spatie\Mailcoach\Mailcoach;
 use Spatie\WebhookClient\Jobs\ProcessWebhookJob;
 use Spatie\WebhookClient\Models\WebhookCall;
 
@@ -20,7 +20,7 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
 
         $this->queue = config('mailcoach.campaigns.perform_on_queue.process_feedback_job');
 
-        $this->connection = $this->connection ?? Config::getQueueConnection();
+        $this->connection = $this->connection ?? Mailcoach::getQueueConnection();
     }
 
     public function handle()
@@ -55,18 +55,16 @@ class ProcessSendgridWebhookJob extends ProcessWebhookJob
 
     protected function getSend(array $rawEvent): ?Send
     {
-        $uuid = Arr::get($rawEvent, 'send_uuid');
+        $id = Arr::get($rawEvent, 'send_uuid') ?? explode('.', Arr::get($rawEvent, 'sg_message_id'))[0] ?? null;
+
+        if (! $id) {
+            return null;
+        }
 
         /** @var class-string<Send> $sendClass */
         $sendClass = self::getSendClass();
 
-        if ($uuid) {
-            return $sendClass::findByUuid($uuid);
-        }
-
-        $messageId = explode('.', Arr::get($rawEvent, 'sg_message_id'))[0] ?? null;
-
-        return $sendClass::findByTransportMessageId($messageId);
+        return $sendClass::findByUuid($id) ?? $sendClass::findByTransportMessageId($id);
     }
 
     protected function isFirstOfThisSendgridMessage(array $rawEvent): bool
