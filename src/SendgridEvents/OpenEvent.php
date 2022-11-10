@@ -14,8 +14,16 @@ class OpenEvent extends SendgridEvent
 
     public function handle(Send $send)
     {
-        if (Arr::get($this->payload, 'email') !== $send->subscriber->email) {
-            return;
+        if ($send->subscriber) {
+            if (Arr::get($this->payload, 'email') !== $send->subscriber->email) {
+                return;
+            }
+        }
+
+        if ($send->transactionalMail) {
+            if (Arr::get($this->payload, 'email') !== $send->transactionalMail->to[0]['email']) {
+                return;
+            }
         }
 
         $send->registerOpen($this->getTimestamp());
