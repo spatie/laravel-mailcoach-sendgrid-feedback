@@ -34,11 +34,6 @@ class ProcessSendgridWebhookJobTest extends TestCase
         $this->send = Send::factory()->create();
         $this->send->update(['uuid' => 'test-uuid']);
         $this->send->subscriber->update(['email' => 'example@test.com']);
-
-        $this->send->campaign->update([
-            'track_opens' => true,
-            'track_clicks' => true,
-        ]);
     }
 
     /** @test */
