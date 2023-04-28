@@ -8,6 +8,7 @@ use Spatie\MailcoachSendgridFeedback\SendgridEvents\OpenEvent;
 use Spatie\MailcoachSendgridFeedback\SendgridEvents\OtherEvent;
 use Spatie\MailcoachSendgridFeedback\SendgridEvents\PermanentBounceEvent;
 use Spatie\MailcoachSendgridFeedback\SendgridEvents\SendgridEvent;
+use Spatie\MailcoachSendgridFeedback\SendgridEvents\SoftBounceEvent;
 
 class SendgridEventFactory
 {
@@ -16,6 +17,7 @@ class SendgridEventFactory
         ComplaintEvent::class,
         OpenEvent::class,
         PermanentBounceEvent::class,
+        SoftBounceEvent::class,
     ];
 
     public static function createForPayload(array $payload): SendgridEvent

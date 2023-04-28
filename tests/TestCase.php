@@ -12,6 +12,7 @@ use Spatie\MailcoachEditor\MailcoachEditorServiceProvider;
 use Spatie\MailcoachMailgunFeedback\MailcoachMailgunFeedbackServiceProvider;
 use Spatie\MailcoachPostmarkFeedback\MailcoachPostmarkFeedbackServiceProvider;
 use Spatie\MailcoachSendgridFeedback\MailcoachSendgridFeedbackServiceProvider;
+use Spatie\MailcoachSendinblueFeedback\MailcoachSendinblueFeedbackServiceProvider;
 use Spatie\MailcoachSesFeedback\MailcoachSesFeedbackServiceProvider;
 
 class TestCase extends Orchestra
@@ -37,6 +38,7 @@ class TestCase extends Orchestra
             MailcoachSesFeedbackServiceProvider::class,
             MailcoachSendgridFeedbackServiceProvider::class,
             MailcoachPostmarkFeedbackServiceProvider::class,
+            MailcoachSendinblueFeedbackServiceProvider::class,
             MailcoachEditorServiceProvider::class,
             MailcoachServiceProvider::class,
         ];
